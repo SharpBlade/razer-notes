@@ -1,0 +1,2 @@
+d:\My Documents\Visual Studio 2012\Projects\RazerNotes\RazerNotes\bin\Debug\RazerNotes.exe.config
+D:\My Documents\razer-notes\RazerNotes\bin\Debug\RazerNotes.exe.config
