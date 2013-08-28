@@ -19,10 +19,10 @@ namespace BrandonScott.RazerNotes.Windows
 
         private void ButtonClick(object sender, RoutedEventArgs e)
         {
-            Application.Current.MainWindow = new MainWindow();
 #if RAZER
             SharpBladeHelper.Manager.Touchpad.ClearWindow();
 #endif
+            Application.Current.MainWindow = new MainWindow();
             Close();
             Application.Current.MainWindow.Show();
         }

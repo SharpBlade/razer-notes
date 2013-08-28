@@ -25,10 +25,10 @@ namespace BrandonScott.RazerNotes.Windows
         // go to notes list
         private void ButtonClick(object sender, RoutedEventArgs e)
         {
-            Application.Current.MainWindow = new NotesWindow();
 #if RAZER
             SharpBladeHelper.Manager.Touchpad.ClearWindow();
 #endif
+            Application.Current.MainWindow = new NotesWindow();
             Close();
             Application.Current.MainWindow.Show();
         }
