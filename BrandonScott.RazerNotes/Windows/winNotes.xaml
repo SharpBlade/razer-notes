@@ -1,4 +1,4 @@
-﻿<Window x:Class="RazerNotes.Windows.winNotes"
+﻿<Window x:Class="BrandonScott.RazerNotes.Windows.winNotes"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="winNotes" Height="480" Width="800" Background="Black" FontFamily="Razer Regular">

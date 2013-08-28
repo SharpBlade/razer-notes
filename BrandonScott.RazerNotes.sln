@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RazerNotes", "RazerNotes\RazerNotes.csproj", "{63E0A85A-5E6C-4973-8317-21D3F5EAFA3F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BrandonScott.RazerNotes", "BrandonScott.RazerNotes\BrandonScott.RazerNotes.csproj", "{63E0A85A-5E6C-4973-8317-21D3F5EAFA3F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
