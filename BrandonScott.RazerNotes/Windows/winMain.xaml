@@ -4,5 +4,8 @@
         Title="MainWindow" Height="480" Width="800">
 	<Grid Background="Black">
 		<TextBlock HorizontalAlignment="Left" Margin="267,186,0,0" TextWrapping="Wrap" Text="Razer Notes" VerticalAlignment="Top" Height="51" Width="267" Foreground="#FF17E43C" FontFamily="Razer Header Light" FontSize="36"/>
-	</Grid>
+        <TextBox x:Name="NoteTitleBox" HorizontalAlignment="Left" Height="23" Margin="10,10,0,0" TextWrapping="Wrap" Text="Note Title" VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name="NoteContentBox" HorizontalAlignment="Left" Height="23" Margin="135,10,0,0" TextWrapping="Wrap" Text="Note Content" VerticalAlignment="Top" Width="647"/>
+        <Button x:Name="SaveNoteButton" Content="Save Note" HorizontalAlignment="Left" Margin="10,38,0,0" VerticalAlignment="Top" Width="75" Height="23" Click="SaveNoteButton_Click"/>
+    </Grid>
 </Window>
