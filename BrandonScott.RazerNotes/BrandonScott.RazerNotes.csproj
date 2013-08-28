@@ -35,6 +35,16 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug %28Razer Enabled%29|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Debug %28Razer Enabled%29\</OutputPath>
+    <DefineConstants>TRACE;DEBUG;RAZER</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\packages\Newtonsoft.Json.5.0.6\lib\net45\Newtonsoft.Json.dll</HintPath>
@@ -68,6 +78,7 @@
     <Compile Include="Lib\Note.cs" />
     <Compile Include="Lib\NoteManager.cs" />
     <Compile Include="Lib\Settings.cs" />
+    <Compile Include="Lib\SharpBladeHelper.cs" />
     <Compile Include="Lib\StorageMethod.cs" />
     <Compile Include="ViewModels\NotesViewModel.cs" />
     <Compile Include="Windows\NotesWindow.xaml.cs">
@@ -128,7 +139,12 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\Sharparam.SharpBlade\Sharparam.SharpBlade\Sharparam.SharpBlade.csproj">
+      <Project>{2c390908-d634-4450-9804-71d4929dd392}</Project>
+      <Name>Sharparam.SharpBlade</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
