@@ -8,5 +8,6 @@
 		<TextBox x:Name="NoteContentBox" HorizontalAlignment="Left" Height="317" Margin="24,91,0,0" TextWrapping="Wrap" Text="Tap to add Razer Note" VerticalAlignment="Top" Width="746" Background="#FF000201" Foreground="#FF17E43C" FontSize="20" BorderBrush="#FF17E43C" BorderThickness="2" Padding="4,0,0,0" SelectionBrush="White"/>
 		<Button Content="Add Note" HorizontalAlignment="Left" Margin="592,9,0,0" VerticalAlignment="Top" Width="75" Height="23" Click="AddNoteButtonClick"/>
 		<Button Content="Button" HorizontalAlignment="Left" Margin="672,9,0,0" VerticalAlignment="Top" Width="75" Click="ButtonClick" Height="23"/>
-	</Grid>
+        <Button Content="SAFE SHUTDOWN" HorizontalAlignment="Left" Margin="592,42,0,0" VerticalAlignment="Top" Width="155" Click="Button_Click"/>
+    </Grid>
 </Window>
