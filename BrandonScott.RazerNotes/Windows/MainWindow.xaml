@@ -3,10 +3,10 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="MainWindow" Height="480" Width="800" WindowStartupLocation="CenterScreen">
 	<Grid Background="Black">
-		<TextBlock HorizontalAlignment="Left" Margin="267,186,0,0" TextWrapping="Wrap" Text="Razer Notes" VerticalAlignment="Top" Height="51" Width="267" Foreground="#FF17E43C" FontFamily="Razer Header Light" FontSize="36"/>
-        <TextBox x:Name="NoteTitleBox" HorizontalAlignment="Left" Height="23" Margin="10,10,0,0" TextWrapping="Wrap" Text="Note Title" VerticalAlignment="Top" Width="120"/>
-        <TextBox x:Name="NoteContentBox" HorizontalAlignment="Left" Height="23" Margin="135,10,0,0" TextWrapping="Wrap" Text="Note Content" VerticalAlignment="Top" Width="647"/>
-        <Button Content="Add Note" HorizontalAlignment="Left" Margin="10,38,0,0" VerticalAlignment="Top" Width="75" Height="23" Click="AddNoteButtonClick"/>
-        <Button Content="Button" HorizontalAlignment="Left" Margin="312,133,0,0" VerticalAlignment="Top" Width="75" Click="ButtonClick"/>
-    </Grid>
+		<TextBlock HorizontalAlignment="Left" Margin="24,22,0,0" TextWrapping="Wrap" Text="Razer Notes" VerticalAlignment="Top" Height="51" Width="267" Foreground="#FF17E43C" FontFamily="Razer Header Light" FontSize="36"/>
+		<TextBox x:Name="NoteTitleBox" HorizontalAlignment="Left" Height="32" Margin="291,33,0,0" TextWrapping="Wrap" Text="Tap to add Note Title" VerticalAlignment="Top" Width="271" Background="#FF020000" Foreground="#FF17E43C" BorderBrush="#FF17E43C" FontSize="18" BorderThickness="2" Padding="4,0,0,0" SelectionBrush="White"/>
+		<TextBox x:Name="NoteContentBox" HorizontalAlignment="Left" Height="317" Margin="24,91,0,0" TextWrapping="Wrap" Text="Tap to add Razer Note" VerticalAlignment="Top" Width="746" Background="#FF000201" Foreground="#FF17E43C" FontSize="20" BorderBrush="#FF17E43C" BorderThickness="2" Padding="4,0,0,0" SelectionBrush="White"/>
+		<Button Content="Add Note" HorizontalAlignment="Left" Margin="592,9,0,0" VerticalAlignment="Top" Width="75" Height="23" Click="AddNoteButtonClick"/>
+		<Button Content="Button" HorizontalAlignment="Left" Margin="672,9,0,0" VerticalAlignment="Top" Width="75" Click="ButtonClick" Height="23"/>
+	</Grid>
 </Window>
