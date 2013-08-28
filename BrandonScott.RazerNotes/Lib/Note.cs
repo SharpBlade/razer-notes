@@ -1,31 +1,81 @@
 ﻿using System;
-using System.Globalization;
-using System.IO;
-using System.Linq;
+using System.ComponentModel;
+using Newtonsoft.Json;
 
 namespace BrandonScott.RazerNotes.Lib
 {
-    public class Note
+    [JsonObject(MemberSerialization.OptIn)]
+    public class Note : INotifyPropertyChanged
     {
-        public string Title;
-        public string Content;
-        public readonly DateTime Created;
-        public DateTime Updated;
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        [JsonProperty("Title")]
+        private string _title;
+
+        [JsonProperty("Content")]
+        private string _content;
+
+        [JsonProperty("Created")]
+        private readonly DateTime _created;
+
+        [JsonProperty("Updated")]
+        private DateTime _updated;
+
+        public string Title
+        {
+            get { return _title; }
+            set
+            {
+                _title = value;
+                Updated = DateTime.Now;
+                OnPropertyChanged("Title");
+            }
+        }
+
+        public string Content
+        {
+            get { return _content; }
+            set
+            {
+                _content = value;
+                Updated = DateTime.Now;
+                OnPropertyChanged("Content");
+            }
+        }
+
+        public DateTime Created
+        {
+            get { return _created; }
+        }
+
+        public DateTime Updated
+        {
+            get { return _updated; }
+            set
+            {
+                _updated = value;
+                OnPropertyChanged("Updated");
+            }
+        }
+
+        private void OnPropertyChanged(string name)
+        {
+            var func = PropertyChanged;
+            if (func != null)
+                func(this, new PropertyChangedEventArgs(name));
+        }
 
         public Note(string title, string content)
         {
             Title = title;
             Content = content;
-            Created = DateTime.Now;
-            Updated = Created;
+            _created = DateTime.Now;
+            _updated = _created;
         }
 
         public override string ToString()
         {
-            return String.Format("{0}-{1}",
-                                 Path.GetInvalidFileNameChars().Aggregate(Title,
-                                    (current, c) => current.Replace(c, '_')),
-                                Created.ToString("yyyyMMddHHmmss"));
+            return Title;
         }
     }
 }

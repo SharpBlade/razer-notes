@@ -8,6 +8,7 @@ namespace BrandonScott.RazerNotes.Lib
 {
     public enum StorageMethod
     {
-        Json
+        Json,
+        SQLite
     }
 }

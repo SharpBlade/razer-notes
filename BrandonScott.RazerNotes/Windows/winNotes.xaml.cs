@@ -5,11 +5,18 @@ namespace BrandonScott.RazerNotes.Windows
     /// <summary>
     /// Interaction logic for winNotes.xaml
     /// </summary>
-    public partial class winNotes : Window
+    public partial class NotesWindow : Window
     {
-        public winNotes()
+        public NotesWindow()
         {
             InitializeComponent();
+        }
+
+        private void ButtonClick(object sender, RoutedEventArgs e)
+        {
+            Application.Current.MainWindow = new MainWindow();
+            Close();
+            Application.Current.MainWindow.Show();
         }
     }
 }
