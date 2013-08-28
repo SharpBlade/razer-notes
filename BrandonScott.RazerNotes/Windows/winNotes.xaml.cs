@@ -5,7 +5,7 @@ namespace BrandonScott.RazerNotes.Windows
     /// <summary>
     /// Interaction logic for winNotes.xaml
     /// </summary>
-    public partial class NotesWindow : Window
+    public partial class NotesWindow
     {
         public NotesWindow()
         {
