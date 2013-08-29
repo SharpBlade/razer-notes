@@ -138,11 +138,18 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
-    <None Include="Resources\AddNote.png" />
-    <None Include="Resources\RazerNotesAdd.png" />
-    <None Include="Resources\RazerNotesDelete.png" />
-    <None Include="Resources\RazerNotesEdit.png" />
-    <None Include="Resources\RazerNotesList.png" />
+    <None Include="Resources\RazerNotesAdd.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Resources\RazerNotesDelete.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Resources\RazerNotesEdit.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Resources\RazerNotesList.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <Content Include="x64\SQLite.Interop.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
