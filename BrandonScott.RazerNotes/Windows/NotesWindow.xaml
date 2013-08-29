@@ -3,17 +3,19 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:viewModels="clr-namespace:BrandonScott.RazerNotes.ViewModels" x:Class="BrandonScott.RazerNotes.Windows.NotesWindow"
         Title="winNotes" Height="480" Width="800" Background="Black" FontFamily="Razer Regular" WindowStartupLocation="CenterScreen">
+    <Window.DataContext>
+        <viewModels:NotesViewModel/>
+    </Window.DataContext>
     <Grid>
         <TextBlock HorizontalAlignment="Left" Margin="24,22,0,0" TextWrapping="Wrap" Text="Razer Notes" VerticalAlignment="Top" Height="51" Width="267" Foreground="#FF17E43C" FontFamily="Razer Header Light" FontSize="36"/>
-        <ListBox HorizontalAlignment="Left" Height="342" Margin="24,78,0,0" VerticalAlignment="Top" Width="740" Foreground="#FF17E43C" Background="Black" BorderBrush="#FF17E43C"
-			ItemsSource="{Binding Notes}" BorderThickness="2">
-			<ListBox.Effect>
-				<DropShadowEffect/>
-			</ListBox.Effect>
-			<ListBox.DataContext>
-                <viewModels:NotesViewModel/>
-            </ListBox.DataContext>
+        <ListBox x:Name="NotesListBox" HorizontalAlignment="Left" Height="342" Margin="24,78,0,0" VerticalAlignment="Top" Width="740" Foreground="#FF17E43C" Background="Black" BorderBrush="#FF17E43C"
+			ItemsSource="{Binding Notes}" BorderThickness="2" FontSize="18">
+            <ListBox.Effect>
+                <DropShadowEffect/>
+            </ListBox.Effect>
         </ListBox>
-        <Button Content="Back" HorizontalAlignment="Left" Margin="612,22,0,0" VerticalAlignment="Top" Width="152" Height="37" FontSize="16" Click="ButtonClick"/>
+        <Button Content="New" HorizontalAlignment="Left" Margin="678,22,0,0" VerticalAlignment="Top" Width="86" Height="37" FontSize="16" Click="NewClick"/>
+        <Button Content="Delete Selected" HorizontalAlignment="Left" Margin="503,22,0,0" VerticalAlignment="Top" Width="170" Height="37" FontSize="16" Click="DeleteButtonClick"/>
+        <Button Content="Edit Selected" HorizontalAlignment="Left" Margin="343,22,0,0" VerticalAlignment="Top" Width="155" Height="37" FontSize="16" Click="EditButtonClick"/>
     </Grid>
 </Window>
