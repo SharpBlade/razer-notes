@@ -16,9 +16,9 @@ namespace BrandonScott.RazerNotes.Windows
 #if RAZER
             SharpBladeHelper.Manager.Touchpad.SetWindow(this);
             SharpBladeHelper.Manager.DynamicKeyEvent += Manager_DynamicKeyEvent;
-            SharpBladeHelper.Manager.EnableDynamicKey(Sharparam.SharpBlade.Native.RazerAPI.DynamicKeyType.DK1, NewClick, "C:\\Users\\Brandon\\Pictures\\RazerNotes\\RazerNotesAdd.png");
-            SharpBladeHelper.Manager.EnableDynamicKey(Sharparam.SharpBlade.Native.RazerAPI.DynamicKeyType.DK2, NewClick, "C:\\Users\\Brandon\\Pictures\\RazerNotes\\RazerNotesEdit.png");
-            SharpBladeHelper.Manager.EnableDynamicKey(Sharparam.SharpBlade.Native.RazerAPI.DynamicKeyType.DK3, NewClick, "C:\\Users\\Brandon\\Pictures\\RazerNotes\\RazerNotesDelete.png");
+            SharpBladeHelper.Manager.EnableDynamicKey(Sharparam.SharpBlade.Native.RazerAPI.DynamicKeyType.DK1, "C:\\Users\\Brandon\\Pictures\\RazerNotes\\RazerNotesAdd.png");
+            SharpBladeHelper.Manager.EnableDynamicKey(Sharparam.SharpBlade.Native.RazerAPI.DynamicKeyType.DK2, "C:\\Users\\Brandon\\Pictures\\RazerNotes\\RazerNotesEdit.png");
+            SharpBladeHelper.Manager.EnableDynamicKey(Sharparam.SharpBlade.Native.RazerAPI.DynamicKeyType.DK3, "C:\\Users\\Brandon\\Pictures\\RazerNotes\\RazerNotesDelete.png");
 #endif
         }
           
