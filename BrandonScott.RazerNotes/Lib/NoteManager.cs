@@ -66,12 +66,20 @@ namespace BrandonScott.RazerNotes.Lib
                 case StorageMethod.Json:
                     _notes = LoadJson(StoragePath);
                     OnCollectionChanged(NotifyCollectionChangedAction.Reset);
-                    _notes.CollectionChanged += OnCollectionChanged;
+                    _notes.CollectionChanged += (sender, args) =>
+                    {
+                        OnCollectionChanged(sender, args);
+                        Save();
+                    };
                     break;
                 default:
                     _notes = new ObservableCollection<Note>();
                     OnCollectionChanged(NotifyCollectionChangedAction.Reset);
-                    _notes.CollectionChanged += OnCollectionChanged;
+                    _notes.CollectionChanged += (sender, args) =>
+                    {
+                        OnCollectionChanged(sender, args);
+                        Save();
+                    };
                     break;
             }
         }
