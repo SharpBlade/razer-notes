@@ -1,6 +1,7 @@
 ﻿using System.Windows;
 using BrandonScott.RazerNotes.Lib;
 using BrandonScott.RazerNotes.ViewModels;
+using Sharparam.SharpBlade.Native;
 
 namespace BrandonScott.RazerNotes.Windows
 {
@@ -16,9 +17,9 @@ namespace BrandonScott.RazerNotes.Windows
 #if RAZER
             SharpBladeHelper.Manager.Touchpad.SetWindow(this);
             SharpBladeHelper.Manager.DynamicKeyEvent += Manager_DynamicKeyEvent;
-            SharpBladeHelper.Manager.EnableDynamicKey(Sharparam.SharpBlade.Native.RazerAPI.DynamicKeyType.DK1, @".\Resources\RazerNotesAdd.png");
-            SharpBladeHelper.Manager.EnableDynamicKey(Sharparam.SharpBlade.Native.RazerAPI.DynamicKeyType.DK2, @".\Resources\RazerNotesEdit.png");
-            SharpBladeHelper.Manager.EnableDynamicKey(Sharparam.SharpBlade.Native.RazerAPI.DynamicKeyType.DK3, @".\Resources\RazerNotesDelete.png");
+            SharpBladeHelper.Manager.EnableDynamicKey(RazerAPI.DynamicKeyType.DK1, @".\Resources\RazerNotesAdd.png");
+            SharpBladeHelper.Manager.EnableDynamicKey(RazerAPI.DynamicKeyType.DK2, @".\Resources\RazerNotesEdit.png");
+            SharpBladeHelper.Manager.EnableDynamicKey(RazerAPI.DynamicKeyType.DK3, @".\Resources\RazerNotesDelete.png");
 #endif
         }
           
@@ -43,6 +44,7 @@ namespace BrandonScott.RazerNotes.Windows
             Application.Current.MainWindow = new NoteWindow();
             Close();
             Application.Current.MainWindow.Show();
+            SharpBladeHelper.Manager.DynamicKeyEvent -= Manager_DynamicKeyEvent;
         }
 
         private void DeleteButtonClick(object sender, RoutedEventArgs e)
@@ -72,6 +74,7 @@ namespace BrandonScott.RazerNotes.Windows
             Application.Current.MainWindow = new NoteWindow((Note)selectedItem);
             Close();
             Application.Current.MainWindow.Show();
+            SharpBladeHelper.Manager.DynamicKeyEvent -= Manager_DynamicKeyEvent;
         }
         private void ParameterFufill(object sender, System.EventArgs e)
         {

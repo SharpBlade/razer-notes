@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using BrandonScott.RazerNotes.Lib;
+using Sharparam.SharpBlade.Native;
 
 namespace BrandonScott.RazerNotes.Windows
 {
@@ -35,22 +36,57 @@ namespace BrandonScott.RazerNotes.Windows
 
             NoteTitleBox.Text = _note.Title;
             NoteContentBox.Text = _note.Content;
+
+            SharpBladeHelper.Manager.Touchpad.SetWindow(this);
+            
+            SharpBladeHelper.Manager.DisableDynamicKey(RazerAPI.DynamicKeyType.DK1);
+            SharpBladeHelper.Manager.DisableDynamicKey(RazerAPI.DynamicKeyType.DK2);
+            SharpBladeHelper.Manager.DisableDynamicKey(RazerAPI.DynamicKeyType.DK3);
+            SharpBladeHelper.Manager.DynamicKeyEvent += Manager_DynamicKeyEvent;
+            SharpBladeHelper.Manager.EnableDynamicKey(RazerAPI.DynamicKeyType.DK1, @".\Resources\RazerNotesSave.png");
+            SharpBladeHelper.Manager.EnableDynamicKey(RazerAPI.DynamicKeyType.DK2, @".\Resources\RazerNotesBack.png");
         }
 
-        private void SaveClick(object sender, RoutedEventArgs e)
+        private void SaveNote()
         {
             _note.Title = NoteTitleBox.Text;
             _note.Content = NoteContentBox.Text;
+
+            SharpBladeHelper.Manager.DynamicKeyEvent -= Manager_DynamicKeyEvent;
             Application.Current.MainWindow = new NotesWindow(_note);
             Close();
             Application.Current.MainWindow.Show();
         }
 
-        private void BackClick(object sender, RoutedEventArgs e)
+        private void Back()
         {
+            SharpBladeHelper.Manager.DynamicKeyEvent -= Manager_DynamicKeyEvent;
             Application.Current.MainWindow = new NotesWindow();
             Close();
             Application.Current.MainWindow.Show();
         }
+
+        private void SaveClick(object sender, RoutedEventArgs e)
+        {
+            SaveNote();
+        }
+
+        private void BackClick(object sender, RoutedEventArgs e)
+        {
+            Back();
+        }
+        private void Manager_DynamicKeyEvent(object sender, Sharparam.SharpBlade.Razer.Events.DynamicKeyEventArgs e)
+        {
+            switch (e.KeyType)
+            {
+                case RazerAPI.DynamicKeyType.DK1:
+                    SaveNote();
+                    break;
+                case RazerAPI.DynamicKeyType.DK2:
+                    Back();
+                    break;
+            }
+        }
+
     }
 }
