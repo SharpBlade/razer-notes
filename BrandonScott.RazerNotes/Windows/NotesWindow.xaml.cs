@@ -36,6 +36,7 @@ namespace BrandonScott.RazerNotes.Windows
             RenderPoll.RenderWindow = this;
             RenderPoll.Start();
 #endif
+           
         }
 
         public NotesWindow(Note note) : this()
@@ -81,8 +82,12 @@ namespace BrandonScott.RazerNotes.Windows
 
             if (selectedIndex > 0)
                 NotesListBox.SelectedIndex = selectedIndex - 1;
-            if (selectedIndex == 0 && NotesListBox.Items.Count > 0)
+            else if (NotesListBox.Items.Count == 1)
+                NotesListBox.SelectedIndex = 0;
+            else if (selectedIndex == 0 && NotesListBox.Items.Count > 0)
                 NotesListBox.SelectedIndex = selectedIndex + 1;
+           
+
         }
 
         private void EditButtonClick(object sender, RoutedEventArgs e)
@@ -116,7 +121,7 @@ namespace BrandonScott.RazerNotes.Windows
                 return;
             else if (NotesListBox.SelectedIndex == NotesListBox.Items.Count - 1 && direction == 1)
                 return;
-
+        
             NotesListBox.SelectedIndex += direction;
             NotesListBox.ScrollIntoView(NotesListBox.SelectedItem);
         }

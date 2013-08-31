@@ -86,17 +86,7 @@ namespace BrandonScott.RazerNotes.Windows
             Application.Current.MainWindow = new NotesWindow();
             Close();
             Application.Current.MainWindow.Show();
-        }
-
-        private void SaveClick(object sender, RoutedEventArgs e)
-        {
-            SaveNote();
-        }
-
-        private void BackClick(object sender, RoutedEventArgs e)
-        {
-            Back();
-        }
+        }   
 
         private void Manager_DynamicKeyEvent(object sender, DynamicKeyEventArgs e)
         {
@@ -131,16 +121,39 @@ namespace BrandonScott.RazerNotes.Windows
                 y >= titlePosition.Y && y <= titlePosition.Y + NoteTitleBox.Height)
             {
                 if (!capturing)
+                {
                     SharpBladeHelper.Manager.StartWPFControlKeyboardCapture(NoteTitleBox);
+                    HighlightInput(NoteTitleBox);
+                    UnhighlightInput(NoteContentBox);
+                }
             }
             else if (x >= contentPosition.X && x <= contentPosition.X + NoteContentBox.Width &&
                      y >= contentPosition.Y && y <= contentPosition.Y + NoteContentBox.Height)
             {
                 if (!capturing)
+                {
                     SharpBladeHelper.Manager.StartWPFControlKeyboardCapture(NoteContentBox);
+                    HighlightInput(NoteContentBox);
+                    UnhighlightInput(NoteTitleBox);
+                }
             }
             else if (capturing)
+            {
                 SharpBladeHelper.Manager.SetKeyboardCapture(false);
+                UnhighlightInput(NoteContentBox);
+                UnhighlightInput(NoteTitleBox);
+            }
         }
+
+        private void HighlightInput(TextBox input)
+        {
+            input.BorderThickness = new Thickness(4, 4, 4, 4);
+        }
+
+        private void UnhighlightInput(TextBox input)
+        {
+            input.BorderThickness = new Thickness(2, 2, 2, 2);
+        }
+
     }
 }

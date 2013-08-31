@@ -139,5 +139,35 @@ namespace BrandonScott.RazerNotes.Properties {
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] razerrl_0 {
+            get {
+                object obj = ResourceManager.GetObject("razerrl_0", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] razerrrg_ {
+            get {
+                object obj = ResourceManager.GetObject("razerrrg_", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] razerrrgo {
+            get {
+                object obj = ResourceManager.GetObject("razerrrgo", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
     }
 }
