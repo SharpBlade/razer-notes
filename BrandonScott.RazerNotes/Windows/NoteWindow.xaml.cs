@@ -62,6 +62,7 @@ namespace BrandonScott.RazerNotes.Windows
 #if RAZER
             SharpBladeHelper.Manager.Touchpad.ClearWindow();
             SharpBladeHelper.Manager.DynamicKeyEvent -= Manager_DynamicKeyEvent;
+            SharpBladeHelper.Manager.Touchpad.Gesture -= TouchpadOnGesture;
             RenderPoll.Stop();
 #endif
             Application.Current.MainWindow = new NotesWindow(_note);
@@ -74,6 +75,7 @@ namespace BrandonScott.RazerNotes.Windows
 #if RAZER
             SharpBladeHelper.Manager.Touchpad.ClearWindow();
             SharpBladeHelper.Manager.DynamicKeyEvent -= Manager_DynamicKeyEvent;
+            SharpBladeHelper.Manager.Touchpad.Gesture -= TouchpadOnGesture;
             RenderPoll.Stop();
 #endif
             Application.Current.MainWindow = new NotesWindow();
