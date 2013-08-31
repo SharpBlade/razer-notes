@@ -48,6 +48,7 @@ namespace BrandonScott.RazerNotes.Windows
             SharpBladeHelper.Manager.EnableDynamicKey(RazerAPI.DynamicKeyType.DK1, @".\Resources\RazerNotesSave.png");
             SharpBladeHelper.Manager.EnableDynamicKey(RazerAPI.DynamicKeyType.DK2, @".\Resources\RazerNotesBack.png");
 
+            SharpBladeHelper.Manager.Touchpad.EnableGesture(RazerAPI.GestureType.Tap);
             SharpBladeHelper.Manager.Touchpad.Gesture += TouchpadOnGesture;
 
             RenderPoll.RenderWindow = this;
@@ -62,6 +63,8 @@ namespace BrandonScott.RazerNotes.Windows
 #if RAZER
             SharpBladeHelper.Manager.Touchpad.ClearWindow();
             SharpBladeHelper.Manager.DynamicKeyEvent -= Manager_DynamicKeyEvent;
+            SharpBladeHelper.Manager.SetKeyboardCapture(false);
+            SharpBladeHelper.Manager.Touchpad.DisableGesture(RazerAPI.GestureType.Tap);
             SharpBladeHelper.Manager.Touchpad.Gesture -= TouchpadOnGesture;
             RenderPoll.Stop();
 #endif
@@ -75,6 +78,8 @@ namespace BrandonScott.RazerNotes.Windows
 #if RAZER
             SharpBladeHelper.Manager.Touchpad.ClearWindow();
             SharpBladeHelper.Manager.DynamicKeyEvent -= Manager_DynamicKeyEvent;
+            SharpBladeHelper.Manager.SetKeyboardCapture(false);
+            SharpBladeHelper.Manager.Touchpad.DisableGesture(RazerAPI.GestureType.Tap);
             SharpBladeHelper.Manager.Touchpad.Gesture -= TouchpadOnGesture;
             RenderPoll.Stop();
 #endif
@@ -118,7 +123,7 @@ namespace BrandonScott.RazerNotes.Windows
             var y = gestureEventArgs.Y;
 
             var titlePosition = NoteTitleBox.TransformToAncestor(Application.Current.MainWindow).Transform(new Point(0, 0));
-            var contentPosition = NoteTitleBox.TransformToAncestor(Application.Current.MainWindow).Transform(new Point(0, 0));
+            var contentPosition = NoteContentBox.TransformToAncestor(Application.Current.MainWindow).Transform(new Point(0, 0));
 
             var capturing = SharpBladeHelper.Manager.KeyboardCapture;
 
