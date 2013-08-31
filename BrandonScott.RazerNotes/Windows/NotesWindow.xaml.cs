@@ -115,6 +115,7 @@ namespace BrandonScott.RazerNotes.Windows
                 return;
 
             NotesListBox.SelectedIndex += direction;
+            NotesListBox.ScrollIntoView(NotesListBox.SelectedItem);
         }
 
         private void MoveNoteUp()
