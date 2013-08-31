@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using BrandonScott.RazerNotes.Lib;
+using Sharparam.SharpBlade.Native;
 
 namespace BrandonScott.RazerNotes.Windows
 {
@@ -35,22 +36,72 @@ namespace BrandonScott.RazerNotes.Windows
 
             NoteTitleBox.Text = _note.Title;
             NoteContentBox.Text = _note.Content;
+#if RAZER
+            SharpBladeHelper.Manager.Touchpad.SetWindow(this);
+            SharpBladeHelper.Manager.DisableDynamicKey(RazerAPI.DynamicKeyType.DK1);
+            SharpBladeHelper.Manager.DisableDynamicKey(RazerAPI.DynamicKeyType.DK2);
+            SharpBladeHelper.Manager.DisableDynamicKey(RazerAPI.DynamicKeyType.DK3);
+            SharpBladeHelper.Manager.DisableDynamicKey(RazerAPI.DynamicKeyType.DK5);
+            SharpBladeHelper.Manager.DisableDynamicKey(RazerAPI.DynamicKeyType.DK10);
+            SharpBladeHelper.Manager.DynamicKeyEvent += Manager_DynamicKeyEvent;
+            SharpBladeHelper.Manager.EnableDynamicKey(RazerAPI.DynamicKeyType.DK1, @".\Resources\RazerNotesSave.png");
+            SharpBladeHelper.Manager.EnableDynamicKey(RazerAPI.DynamicKeyType.DK2, @".\Resources\RazerNotesBack.png");
+
+            RenderPoll.RenderWindow = this;
+            RenderPoll.Start();
+#endif
+        }
+
+        private void SaveNote()
+        {
+            _note.Title = NoteTitleBox.Text;
+            _note.Content = NoteContentBox.Text;
+#if RAZER
+            SharpBladeHelper.Manager.Touchpad.ClearWindow();
+            SharpBladeHelper.Manager.DynamicKeyEvent -= Manager_DynamicKeyEvent;
+            RenderPoll.Stop();
+#endif
+            Application.Current.MainWindow = new NotesWindow(_note);
+            Close();
+            Application.Current.MainWindow.Show();           
+        }
+
+        private void Back()
+        {
+#if RAZER
+            SharpBladeHelper.Manager.Touchpad.ClearWindow();
+            SharpBladeHelper.Manager.DynamicKeyEvent -= Manager_DynamicKeyEvent;
+            RenderPoll.Stop();
+#endif
+            Application.Current.MainWindow = new NotesWindow();
+            Close();
+            Application.Current.MainWindow.Show();
         }
 
         private void SaveClick(object sender, RoutedEventArgs e)
         {
-            _note.Title = NoteTitleBox.Text;
-            _note.Content = NoteContentBox.Text;
-            Application.Current.MainWindow = new NotesWindow(_note);
-            Close();
-            Application.Current.MainWindow.Show();
+            SaveNote();
         }
 
         private void BackClick(object sender, RoutedEventArgs e)
         {
-            Application.Current.MainWindow = new NotesWindow();
-            Close();
-            Application.Current.MainWindow.Show();
+            Back();
+        }
+
+        private void Manager_DynamicKeyEvent(object sender, Sharparam.SharpBlade.Razer.Events.DynamicKeyEventArgs e)
+        {
+            if (e.State == RazerAPI.DynamicKeyState.Down)
+            {
+                switch (e.KeyType)
+                {
+                    case RazerAPI.DynamicKeyType.DK1:
+                        SaveNote();
+                        break;
+                    case RazerAPI.DynamicKeyType.DK2:
+                        Back();
+                        break;
+                }
+            }
         }
     }
 }
