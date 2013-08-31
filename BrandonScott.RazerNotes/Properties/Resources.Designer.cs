@@ -73,9 +73,29 @@ namespace BrandonScott.RazerNotes.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap RazerNotesBack {
+            get {
+                object obj = ResourceManager.GetObject("RazerNotesBack", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap RazerNotesDelete {
             get {
                 object obj = ResourceManager.GetObject("RazerNotesDelete", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap RazerNotesDown {
+            get {
+                object obj = ResourceManager.GetObject("RazerNotesDown", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -96,6 +116,26 @@ namespace BrandonScott.RazerNotes.Properties {
         internal static System.Drawing.Bitmap RazerNotesList {
             get {
                 object obj = ResourceManager.GetObject("RazerNotesList", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap RazerNotesSave {
+            get {
+                object obj = ResourceManager.GetObject("RazerNotesSave", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap RazerNotesUp {
+            get {
+                object obj = ResourceManager.GetObject("RazerNotesUp", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
