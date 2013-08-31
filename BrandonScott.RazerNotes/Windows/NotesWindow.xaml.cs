@@ -16,6 +16,7 @@ namespace BrandonScott.RazerNotes.Windows
             InitializeComponent();
 
 #if RAZER
+            SharpBladeHelper.Manager.Touchpad.DisableOSGesture(RazerAPI.GestureType.All);
             SharpBladeHelper.Manager.Touchpad.SetWindow(this);
             SharpBladeHelper.Manager.DynamicKeyEvent += Manager_DynamicKeyEvent;
             SharpBladeHelper.Manager.DisableDynamicKey(RazerAPI.DynamicKeyType.DK1);
