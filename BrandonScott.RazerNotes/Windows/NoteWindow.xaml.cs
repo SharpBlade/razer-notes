@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using BrandonScott.RazerNotes.Lib;
 using Sharparam.SharpBlade.Native;
+using Sharparam.SharpBlade.Razer.Events;
 
 namespace BrandonScott.RazerNotes.Windows
 {
@@ -47,6 +48,9 @@ namespace BrandonScott.RazerNotes.Windows
             SharpBladeHelper.Manager.EnableDynamicKey(RazerAPI.DynamicKeyType.DK1, @".\Resources\RazerNotesSave.png");
             SharpBladeHelper.Manager.EnableDynamicKey(RazerAPI.DynamicKeyType.DK2, @".\Resources\RazerNotesBack.png");
 
+            SharpBladeHelper.Manager.Touchpad.EnableGesture(RazerAPI.GestureType.Tap);
+            SharpBladeHelper.Manager.Touchpad.Gesture += TouchpadOnGesture;
+
             RenderPoll.RenderWindow = this;
             RenderPoll.Start();
 #endif
@@ -59,6 +63,9 @@ namespace BrandonScott.RazerNotes.Windows
 #if RAZER
             SharpBladeHelper.Manager.Touchpad.ClearWindow();
             SharpBladeHelper.Manager.DynamicKeyEvent -= Manager_DynamicKeyEvent;
+            SharpBladeHelper.Manager.SetKeyboardCapture(false);
+            SharpBladeHelper.Manager.Touchpad.DisableGesture(RazerAPI.GestureType.Tap);
+            SharpBladeHelper.Manager.Touchpad.Gesture -= TouchpadOnGesture;
             RenderPoll.Stop();
 #endif
             Application.Current.MainWindow = new NotesWindow(_note);
@@ -71,6 +78,9 @@ namespace BrandonScott.RazerNotes.Windows
 #if RAZER
             SharpBladeHelper.Manager.Touchpad.ClearWindow();
             SharpBladeHelper.Manager.DynamicKeyEvent -= Manager_DynamicKeyEvent;
+            SharpBladeHelper.Manager.SetKeyboardCapture(false);
+            SharpBladeHelper.Manager.Touchpad.DisableGesture(RazerAPI.GestureType.Tap);
+            SharpBladeHelper.Manager.Touchpad.Gesture -= TouchpadOnGesture;
             RenderPoll.Stop();
 #endif
             Application.Current.MainWindow = new NotesWindow();
@@ -88,7 +98,7 @@ namespace BrandonScott.RazerNotes.Windows
             Back();
         }
 
-        private void Manager_DynamicKeyEvent(object sender, Sharparam.SharpBlade.Razer.Events.DynamicKeyEventArgs e)
+        private void Manager_DynamicKeyEvent(object sender, DynamicKeyEventArgs e)
         {
             if (e.State == RazerAPI.DynamicKeyState.Down)
             {
@@ -102,6 +112,35 @@ namespace BrandonScott.RazerNotes.Windows
                         break;
                 }
             }
+        }
+
+        private void TouchpadOnGesture(object sender, GestureEventArgs gestureEventArgs)
+        {
+            if (gestureEventArgs.GestureType != RazerAPI.GestureType.Tap)
+                return;
+
+            var x = gestureEventArgs.X;
+            var y = gestureEventArgs.Y;
+
+            var titlePosition = NoteTitleBox.TransformToAncestor(Application.Current.MainWindow).Transform(new Point(0, 0));
+            var contentPosition = NoteContentBox.TransformToAncestor(Application.Current.MainWindow).Transform(new Point(0, 0));
+
+            var capturing = SharpBladeHelper.Manager.KeyboardCapture;
+
+            if (x >= titlePosition.X && x <= titlePosition.X + NoteTitleBox.Width &&
+                y >= titlePosition.Y && y <= titlePosition.Y + NoteTitleBox.Height)
+            {
+                if (!capturing)
+                    SharpBladeHelper.Manager.StartWPFControlKeyboardCapture(NoteTitleBox);
+            }
+            else if (x >= contentPosition.X && x <= contentPosition.X + NoteContentBox.Width &&
+                     y >= contentPosition.Y && y <= contentPosition.Y + NoteContentBox.Height)
+            {
+                if (!capturing)
+                    SharpBladeHelper.Manager.StartWPFControlKeyboardCapture(NoteContentBox);
+            }
+            else if (capturing)
+                SharpBladeHelper.Manager.SetKeyboardCapture(false);
         }
     }
 }
