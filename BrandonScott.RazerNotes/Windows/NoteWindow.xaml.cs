@@ -126,13 +126,13 @@ namespace BrandonScott.RazerNotes.Windows
                 y >= titlePosition.Y && y <= titlePosition.Y + NoteTitleBox.Height)
             {
                 if (!capturing)
-                    SharpBladeHelper.Manager.StartControlKeyboardCapture(NoteTitleBox);
+                    SharpBladeHelper.Manager.StartWPFControlKeyboardCapture(NoteTitleBox);
             }
             else if (x >= contentPosition.X && x <= contentPosition.X + NoteContentBox.Width &&
                      y >= contentPosition.Y && y <= contentPosition.Y + NoteContentBox.Height)
             {
                 if (!capturing)
-                    SharpBladeHelper.Manager.StartControlKeyboardCapture(NoteContentBox);
+                    SharpBladeHelper.Manager.StartWPFControlKeyboardCapture(NoteContentBox);
             }
             else if (capturing)
                 SharpBladeHelper.Manager.SetKeyboardCapture(false);
