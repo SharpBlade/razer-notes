@@ -36,7 +36,7 @@ namespace BrandonScott.RazerNotes.Windows
 
             NoteTitleBox.Text = _note.Title;
             NoteContentBox.Text = _note.Content;
-
+#if RAZER
             SharpBladeHelper.Manager.Touchpad.SetWindow(this);
             SharpBladeHelper.Manager.DisableDynamicKey(RazerAPI.DynamicKeyType.DK1);
             SharpBladeHelper.Manager.DisableDynamicKey(RazerAPI.DynamicKeyType.DK2);
@@ -46,6 +46,10 @@ namespace BrandonScott.RazerNotes.Windows
             SharpBladeHelper.Manager.DynamicKeyEvent += Manager_DynamicKeyEvent;
             SharpBladeHelper.Manager.EnableDynamicKey(RazerAPI.DynamicKeyType.DK1, @".\Resources\RazerNotesSave.png");
             SharpBladeHelper.Manager.EnableDynamicKey(RazerAPI.DynamicKeyType.DK2, @".\Resources\RazerNotesBack.png");
+
+            RenderPoll.RenderWindow = this;
+            RenderPoll.Start();
+#endif
         }
 
         private void SaveNote()
@@ -54,22 +58,24 @@ namespace BrandonScott.RazerNotes.Windows
             _note.Content = NoteContentBox.Text;
 #if RAZER
             SharpBladeHelper.Manager.Touchpad.ClearWindow();
+            SharpBladeHelper.Manager.DynamicKeyEvent -= Manager_DynamicKeyEvent;
+            RenderPoll.Stop();
 #endif
             Application.Current.MainWindow = new NotesWindow(_note);
             Close();
-            Application.Current.MainWindow.Show();
-            SharpBladeHelper.Manager.DynamicKeyEvent -= Manager_DynamicKeyEvent;
+            Application.Current.MainWindow.Show();           
         }
 
         private void Back()
         {
 #if RAZER
             SharpBladeHelper.Manager.Touchpad.ClearWindow();
+            SharpBladeHelper.Manager.DynamicKeyEvent -= Manager_DynamicKeyEvent;
+            RenderPoll.Stop();
 #endif
             Application.Current.MainWindow = new NotesWindow();
             Close();
             Application.Current.MainWindow.Show();
-            SharpBladeHelper.Manager.DynamicKeyEvent -= Manager_DynamicKeyEvent;
         }
 
         private void SaveClick(object sender, RoutedEventArgs e)

@@ -2,6 +2,7 @@
 using BrandonScott.RazerNotes.Lib;
 using BrandonScott.RazerNotes.ViewModels;
 using Sharparam.SharpBlade.Native;
+using System;
 
 namespace BrandonScott.RazerNotes.Windows
 {
@@ -25,8 +26,14 @@ namespace BrandonScott.RazerNotes.Windows
             SharpBladeHelper.Manager.EnableDynamicKey(RazerAPI.DynamicKeyType.DK5, @".\Resources\RazerNotesDown.png");
             SharpBladeHelper.Manager.EnableDynamicKey(RazerAPI.DynamicKeyType.DK10, @".\Resources\RazerNotesUp.png");
 #endif
+            if(NotesListBox.Items.Count > 0)
+                NotesListBox.SelectedIndex = 0;
+#if RAZER
+            RenderPoll.RenderWindow = this;
+            RenderPoll.Start();
+#endif
         }
-          
+
         public NotesWindow(Note note) : this()
         {
             var notesVm = (NotesViewModel) DataContext;
@@ -46,6 +53,7 @@ namespace BrandonScott.RazerNotes.Windows
 #if RAZER
             SharpBladeHelper.Manager.Touchpad.ClearWindow();
             SharpBladeHelper.Manager.DynamicKeyEvent -= Manager_DynamicKeyEvent;
+            RenderPoll.Stop();
 #endif
             Application.Current.MainWindow = new NoteWindow();
             Close();
@@ -60,11 +68,17 @@ namespace BrandonScott.RazerNotes.Windows
         private void DeleteNote()
         {
             var selectedItem = NotesListBox.SelectedItem;
+            int selectedIndex = NotesListBox.SelectedIndex;
 
             if (selectedItem == null)
                 return;
 
             ((NotesViewModel) DataContext).Notes.Remove((Note)selectedItem);
+
+            if (selectedIndex > 0)
+                NotesListBox.SelectedIndex = selectedIndex - 1;
+            if (selectedIndex == 0 && NotesListBox.Items.Count > 0)
+                NotesListBox.SelectedIndex = selectedIndex + 1;
         }
 
         private void EditButtonClick(object sender, RoutedEventArgs e)
@@ -81,6 +95,7 @@ namespace BrandonScott.RazerNotes.Windows
 #if RAZER
             SharpBladeHelper.Manager.Touchpad.ClearWindow();
             SharpBladeHelper.Manager.DynamicKeyEvent -= Manager_DynamicKeyEvent;
+            RenderPoll.Stop();
 #endif
             Application.Current.MainWindow = new NoteWindow((Note) selectedItem);
             Close();
