@@ -1,8 +1,8 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 using BrandonScott.RazerNotes.Lib;
 using BrandonScott.RazerNotes.ViewModels;
 using Sharparam.SharpBlade.Native;
-using System;
 
 namespace BrandonScott.RazerNotes.Windows
 {
@@ -36,7 +36,6 @@ namespace BrandonScott.RazerNotes.Windows
             RenderPoll.RenderWindow = this;
             RenderPoll.Start();
 #endif
-           
         }
 
         public NotesWindow(Note note) : this()
@@ -46,6 +45,9 @@ namespace BrandonScott.RazerNotes.Windows
                 notesVm.Notes.Add(note);
             else
                 notesVm.Notes.Save();
+
+            if (NotesListBox.Items.Count > 0)
+                NotesListBox.SelectedIndex = 0;
         }
 
         private void NewClick(object sender, RoutedEventArgs e)
@@ -86,8 +88,6 @@ namespace BrandonScott.RazerNotes.Windows
                 NotesListBox.SelectedIndex = 0;
             else if (selectedIndex == 0 && NotesListBox.Items.Count > 0)
                 NotesListBox.SelectedIndex = selectedIndex + 1;
-           
-
         }
 
         private void EditButtonClick(object sender, RoutedEventArgs e)

@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using BrandonScott.RazerNotes.Lib;
+using BrandonScott.RazerNotes.ViewModels;
 using Sharparam.SharpBlade.Native;
 using Sharparam.SharpBlade.Razer.Events;
 
@@ -23,10 +24,13 @@ namespace BrandonScott.RazerNotes.Windows
     public partial class NoteWindow : Window
     {
         private readonly Note _note;
+        private bool clearTitle;
+        private bool clearContent;
 
         public NoteWindow() : this(new Note("Tap to add note title", "Tap to add note content"))
         {
-
+            clearTitle = true;
+            clearContent = true;
         }
 
         public NoteWindow(Note note)
@@ -34,7 +38,7 @@ namespace BrandonScott.RazerNotes.Windows
             InitializeComponent();
 
             _note = note;
-
+           
             NoteTitleBox.Text = _note.Title;
             NoteContentBox.Text = _note.Content;
 #if RAZER
@@ -53,7 +57,7 @@ namespace BrandonScott.RazerNotes.Windows
 
             RenderPoll.RenderWindow = this;
             RenderPoll.Start();
-#endif
+#endif               
         }
 
         private void SaveNote()
@@ -120,22 +124,26 @@ namespace BrandonScott.RazerNotes.Windows
             if (x >= titlePosition.X && x <= titlePosition.X + NoteTitleBox.Width &&
                 y >= titlePosition.Y && y <= titlePosition.Y + NoteTitleBox.Height)
             {
-                if (!capturing)
+                SharpBladeHelper.Manager.StartWPFControlKeyboardCapture(NoteTitleBox);
+                if (clearTitle)
                 {
-                    SharpBladeHelper.Manager.StartWPFControlKeyboardCapture(NoteTitleBox);
-                    HighlightInput(NoteTitleBox);
-                    UnhighlightInput(NoteContentBox);
+                    NoteTitleBox.Clear();
+                    clearTitle = false;
                 }
+                HighlightInput(NoteTitleBox);
+                UnhighlightInput(NoteContentBox);
             }
             else if (x >= contentPosition.X && x <= contentPosition.X + NoteContentBox.Width &&
                      y >= contentPosition.Y && y <= contentPosition.Y + NoteContentBox.Height)
             {
-                if (!capturing)
+                SharpBladeHelper.Manager.StartWPFControlKeyboardCapture(NoteContentBox, false);
+                if (clearContent)
                 {
-                    SharpBladeHelper.Manager.StartWPFControlKeyboardCapture(NoteContentBox);
-                    HighlightInput(NoteContentBox);
-                    UnhighlightInput(NoteTitleBox);
+                    NoteContentBox.Clear();
+                    clearContent = false;
                 }
+                HighlightInput(NoteContentBox);
+                UnhighlightInput(NoteTitleBox);
             }
             else if (capturing)
             {
@@ -154,6 +162,5 @@ namespace BrandonScott.RazerNotes.Windows
         {
             input.BorderThickness = new Thickness(2, 2, 2, 2);
         }
-
     }
 }
