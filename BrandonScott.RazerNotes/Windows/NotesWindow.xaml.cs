@@ -50,11 +50,6 @@ namespace BrandonScott.RazerNotes.Windows
                 NotesListBox.SelectedIndex = 0;
         }
 
-        private void NewClick(object sender, RoutedEventArgs e)
-        {
-            NewNote();
-        }
-
         private void NewNote()
         {
 #if RAZER
@@ -65,12 +60,7 @@ namespace BrandonScott.RazerNotes.Windows
             Application.Current.MainWindow = new NoteWindow();
             Close();
             Application.Current.MainWindow.Show();
-        }
-
-        private void DeleteButtonClick(object sender, RoutedEventArgs e)
-        {
-            DeleteNote();
-        }
+        }    
 
         private void DeleteNote()
         {
@@ -88,11 +78,6 @@ namespace BrandonScott.RazerNotes.Windows
                 NotesListBox.SelectedIndex = 0;
             else if (selectedIndex == 0 && NotesListBox.Items.Count > 0)
                 NotesListBox.SelectedIndex = selectedIndex + 1;
-        }
-
-        private void EditButtonClick(object sender, RoutedEventArgs e)
-        {
-            EditNote();
         }
 
         private void EditNote()
