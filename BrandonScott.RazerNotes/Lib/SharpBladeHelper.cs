@@ -15,10 +15,10 @@ namespace BrandonScott.RazerNotes.Lib
         }
         public static void ShutdownListener()
         {
-            Manager.AppEvent += Manager_AppEvent;
+            Manager.AppEvent += OnAppEvent;
         }
 
-        static void Manager_AppEvent(object sender, Sharparam.SharpBlade.Razer.Events.AppEventEventArgs e)
+        static void OnAppEvent(object sender, Sharparam.SharpBlade.Razer.Events.AppEventEventArgs e)
         {
             if (e.Type == RazerAPI.AppEventType.Deactivated || e.Type == RazerAPI.AppEventType.Close || e.Type == RazerAPI.AppEventType.Exit)
             {
