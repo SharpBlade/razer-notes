@@ -98,15 +98,12 @@ namespace BrandonScott.RazerNotes.Windows
 
         private void MoveNote(int direction)
         {
-            if (NotesListBox.Items.Count == 0)
+            if (NotesListBox.Items.Count == 0 ||
+                NotesListBox.SelectedIndex == -1 ||
+                (NotesListBox.SelectedIndex == 0 && direction == -1) ||
+                (NotesListBox.SelectedIndex == NotesListBox.Items.Count - 1 && direction == 1))
                 return;
-            else if (NotesListBox.SelectedIndex == -1)
-                return;
-            else if (NotesListBox.SelectedIndex == 0 && direction == -1)
-                return;
-            else if (NotesListBox.SelectedIndex == NotesListBox.Items.Count - 1 && direction == 1)
-                return;
-        
+
             NotesListBox.SelectedIndex += direction;
             NotesListBox.ScrollIntoView(NotesListBox.SelectedItem);
         }
