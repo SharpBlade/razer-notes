@@ -21,7 +21,7 @@ namespace BrandonScott.RazerNotes.Windows
             
             SharpBladeHelper.ShutdownListener();
         
-            SharpBladeHelper.Manager.DynamicKeyEvent += Manager_DynamicKeyEvent;
+            SharpBladeHelper.Manager.DynamicKeyEvent += OnDynamicKeyEvent;
             SharpBladeHelper.Manager.DisableDynamicKey(RazerAPI.DynamicKeyType.DK1);
             SharpBladeHelper.Manager.DisableDynamicKey(RazerAPI.DynamicKeyType.DK2);
             SharpBladeHelper.Manager.EnableDynamicKey(RazerAPI.DynamicKeyType.DK1, @".\Resources\RazerNotesAdd.png");
@@ -54,7 +54,7 @@ namespace BrandonScott.RazerNotes.Windows
         {
 #if RAZER
             SharpBladeHelper.Manager.Touchpad.ClearWindow();
-            SharpBladeHelper.Manager.DynamicKeyEvent -= Manager_DynamicKeyEvent;
+            SharpBladeHelper.Manager.DynamicKeyEvent -= OnDynamicKeyEvent;
             RenderPoll.Stop();
 #endif
             Application.Current.MainWindow = new NoteWindow();
@@ -88,7 +88,7 @@ namespace BrandonScott.RazerNotes.Windows
                 return;
 #if RAZER
             SharpBladeHelper.Manager.Touchpad.ClearWindow();
-            SharpBladeHelper.Manager.DynamicKeyEvent -= Manager_DynamicKeyEvent;
+            SharpBladeHelper.Manager.DynamicKeyEvent -= OnDynamicKeyEvent;
             RenderPoll.Stop();
 #endif
             Application.Current.MainWindow = new NoteWindow((Note) selectedItem);
@@ -118,7 +118,7 @@ namespace BrandonScott.RazerNotes.Windows
             MoveNote(1);
         }
 
-        private void Manager_DynamicKeyEvent(object sender, Sharparam.SharpBlade.Razer.Events.DynamicKeyEventArgs e)
+        private void OnDynamicKeyEvent(object sender, Sharparam.SharpBlade.Razer.Events.DynamicKeyEventArgs e)
         {
             if (e.State == RazerAPI.DynamicKeyState.Down)
             {
