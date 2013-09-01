@@ -6,7 +6,7 @@ namespace BrandonScott.RazerNotes.Lib
 {
     public static class JsonHelper
     {
-        public static Lazy<JsonSerializer> Serializer = new Lazy<JsonSerializer>();
+        private static readonly Lazy<JsonSerializer> Serializer = new Lazy<JsonSerializer>();
 
         public static void Serialize<T>(T data, string file)
         {
@@ -24,8 +24,8 @@ namespace BrandonScott.RazerNotes.Lib
         public static T Deserialize<T>(string file)
         {
             if (!File.Exists(file))
-                throw new ArgumentException("Specified file does not exist", "file",
-                    new FileNotFoundException("Couldn't find the specified file", file));
+                throw new ArgumentException(@"Specified file does not exist", "file",
+                    new FileNotFoundException(@"Couldn't find the specified file", file));
 
             T result;
 
