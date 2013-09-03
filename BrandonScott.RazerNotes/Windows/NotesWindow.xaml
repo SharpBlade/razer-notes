@@ -8,7 +8,7 @@
 	</Window.DataContext>
 	<Grid>
 		<TextBlock HorizontalAlignment="Left" Margin="24,22,0,0" TextWrapping="Wrap" Text="Razer Notes" VerticalAlignment="Top" Height="51" Width="267" Foreground="#FF17E43C" FontFamily="../Resources/#Razer Header Light" FontSize="36"/>
-		<ListBox x:Name="NotesListBox" HorizontalAlignment="Left" Height="342" Margin="24,78,0,0" VerticalAlignment="Top" Width="740" Foreground="#FF17E43C" Background="Black" BorderBrush="#FF17E43C"
+		<ListBox FontFamily="../Resources/#Razer Header Regular" x:Name="NotesListBox" HorizontalAlignment="Left" Height="342" Margin="24,78,0,0" VerticalAlignment="Top" Width="740" Foreground="#FF17E43C" Background="Black" BorderBrush="#FF17E43C"
 			ItemsSource="{Binding Notes}" BorderThickness="2" FontSize="24" Grid.ColumnSpan="2">
 			<ListBox.Effect>
 				<DropShadowEffect/>

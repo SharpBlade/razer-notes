@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace BrandonScott.RazerNotes.Lib
+﻿namespace BrandonScott.RazerNotes.Lib
 {
     public enum StorageMethod
     {
