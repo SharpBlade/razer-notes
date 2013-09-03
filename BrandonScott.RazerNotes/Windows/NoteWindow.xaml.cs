@@ -1,18 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 using BrandonScott.RazerNotes.Lib;
-using BrandonScott.RazerNotes.ViewModels;
 using Sharparam.SharpBlade.Native;
 using Sharparam.SharpBlade.Razer.Events;
 
@@ -21,16 +9,18 @@ namespace BrandonScott.RazerNotes.Windows
     /// <summary>
     /// Interaction logic for EditWindow.xaml
     /// </summary>
-    public partial class NoteWindow : Window
+    public partial class NoteWindow
     {
         private readonly Note _note;
-        private bool clearTitle;
-        private bool clearContent;
+        private bool _clearTitle;
+        private bool _clearContent;
+
+        private CaretManager _caretManager;
 
         public NoteWindow() : this(new Note("Tap to add note title", "Tap to add note content"))
         {
-            clearTitle = true;
-            clearContent = true;
+            _clearTitle = true;
+            _clearContent = true;
         }
 
         public NoteWindow(Note note)
@@ -48,7 +38,7 @@ namespace BrandonScott.RazerNotes.Windows
             SharpBladeHelper.Manager.DisableDynamicKey(RazerAPI.DynamicKeyType.DK3);
             SharpBladeHelper.Manager.DisableDynamicKey(RazerAPI.DynamicKeyType.DK5);
             SharpBladeHelper.Manager.DisableDynamicKey(RazerAPI.DynamicKeyType.DK10);
-            SharpBladeHelper.Manager.DynamicKeyEvent += Manager_DynamicKeyEvent;
+            SharpBladeHelper.Manager.DynamicKeyEvent += ManagerDynamicKeyEvent;
             SharpBladeHelper.Manager.EnableDynamicKey(RazerAPI.DynamicKeyType.DK1, @".\Resources\RazerNotesSave.png");
             SharpBladeHelper.Manager.EnableDynamicKey(RazerAPI.DynamicKeyType.DK2, @".\Resources\RazerNotesBack.png");
 
@@ -60,18 +50,31 @@ namespace BrandonScott.RazerNotes.Windows
 #endif               
         }
 
+        private void DisposeCaretManager()
+        {
+            if (_caretManager == null)
+                return;
+
+            _caretManager.Dispose();
+            _caretManager = null;
+        }
+
         private void SaveNote()
         {
+            DisposeCaretManager();
+
             _note.Title = NoteTitleBox.Text;
             _note.Content = NoteContentBox.Text;
+
 #if RAZER
             SharpBladeHelper.Manager.Touchpad.ClearWindow();
-            SharpBladeHelper.Manager.DynamicKeyEvent -= Manager_DynamicKeyEvent;
+            SharpBladeHelper.Manager.DynamicKeyEvent -= ManagerDynamicKeyEvent;
             SharpBladeHelper.Manager.SetKeyboardCapture(false);
             SharpBladeHelper.Manager.Touchpad.DisableGesture(RazerAPI.GestureType.Tap);
             SharpBladeHelper.Manager.Touchpad.Gesture -= TouchpadOnGesture;
             RenderPoll.Stop();
 #endif
+
             Application.Current.MainWindow = new NotesWindow(_note);
             Close();
             Application.Current.MainWindow.Show();           
@@ -79,32 +82,35 @@ namespace BrandonScott.RazerNotes.Windows
 
         private void Back()
         {
+            DisposeCaretManager();
+
 #if RAZER
             SharpBladeHelper.Manager.Touchpad.ClearWindow();
-            SharpBladeHelper.Manager.DynamicKeyEvent -= Manager_DynamicKeyEvent;
+            SharpBladeHelper.Manager.DynamicKeyEvent -= ManagerDynamicKeyEvent;
             SharpBladeHelper.Manager.SetKeyboardCapture(false);
             SharpBladeHelper.Manager.Touchpad.DisableGesture(RazerAPI.GestureType.Tap);
             SharpBladeHelper.Manager.Touchpad.Gesture -= TouchpadOnGesture;
             RenderPoll.Stop();
 #endif
+
             Application.Current.MainWindow = new NotesWindow();
             Close();
             Application.Current.MainWindow.Show();
         }   
 
-        private void Manager_DynamicKeyEvent(object sender, DynamicKeyEventArgs e)
+        private void ManagerDynamicKeyEvent(object sender, DynamicKeyEventArgs e)
         {
-            if (e.State == RazerAPI.DynamicKeyState.Down)
+            if (e.State != RazerAPI.DynamicKeyState.Down)
+                return;
+
+            switch (e.KeyType)
             {
-                switch (e.KeyType)
-                {
-                    case RazerAPI.DynamicKeyType.DK1:
-                        SaveNote();
-                        break;
-                    case RazerAPI.DynamicKeyType.DK2:
-                        Back();
-                        break;
-                }
+                case RazerAPI.DynamicKeyType.DK1:
+                    SaveNote();
+                    break;
+                case RazerAPI.DynamicKeyType.DK2:
+                    Back();
+                    break;
             }
         }
 
@@ -125,11 +131,12 @@ namespace BrandonScott.RazerNotes.Windows
                 y >= titlePosition.Y && y <= titlePosition.Y + NoteTitleBox.Height)
             {
                 SharpBladeHelper.Manager.StartWPFControlKeyboardCapture(NoteTitleBox);
-                if (clearTitle)
+                if (_clearTitle)
                 {
                     NoteTitleBox.Clear();
-                    clearTitle = false;
+                    _clearTitle = false;
                 }
+                _caretManager = new CaretManager(NoteTitleBox, NoteTitleBox.Text.Length);
                 HighlightInput(NoteTitleBox);
                 UnhighlightInput(NoteContentBox);
             }
@@ -137,17 +144,19 @@ namespace BrandonScott.RazerNotes.Windows
                      y >= contentPosition.Y && y <= contentPosition.Y + NoteContentBox.Height)
             {
                 SharpBladeHelper.Manager.StartWPFControlKeyboardCapture(NoteContentBox, false);
-                if (clearContent)
+                if (_clearContent)
                 {
                     NoteContentBox.Clear();
-                    clearContent = false;
+                    _clearContent = false;
                 }
+                _caretManager = new CaretManager(NoteContentBox, NoteContentBox.Text.Length);
                 HighlightInput(NoteContentBox);
                 UnhighlightInput(NoteTitleBox);
             }
             else if (capturing)
             {
                 SharpBladeHelper.Manager.SetKeyboardCapture(false);
+                DisposeCaretManager();
                 UnhighlightInput(NoteContentBox);
                 UnhighlightInput(NoteTitleBox);
             }
