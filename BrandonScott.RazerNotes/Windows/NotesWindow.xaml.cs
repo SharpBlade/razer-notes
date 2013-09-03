@@ -2,7 +2,6 @@
 using BrandonScott.RazerNotes.Lib;
 using BrandonScott.RazerNotes.ViewModels;
 using Sharparam.SharpBlade.Native;
-using System;
 
 namespace BrandonScott.RazerNotes.Windows
 {

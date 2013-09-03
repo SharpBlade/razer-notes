@@ -78,6 +78,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Lib\CaretManager.cs" />
     <Compile Include="Lib\JsonHelper.cs" />
     <Compile Include="Lib\Note.cs" />
     <Compile Include="Lib\NoteManager.cs" />
