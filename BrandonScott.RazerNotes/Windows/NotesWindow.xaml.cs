@@ -1,8 +1,8 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 using BrandonScott.RazerNotes.Lib;
 using BrandonScott.RazerNotes.ViewModels;
 using Sharparam.SharpBlade.Native;
-using System;
 
 namespace BrandonScott.RazerNotes.Windows
 {
@@ -18,6 +18,9 @@ namespace BrandonScott.RazerNotes.Windows
 #if RAZER
             SharpBladeHelper.Manager.Touchpad.DisableOSGesture(RazerAPI.GestureType.All);
             SharpBladeHelper.Manager.Touchpad.SetWindow(this);
+            
+            SharpBladeHelper.ShutdownListener();
+        
             SharpBladeHelper.Manager.DynamicKeyEvent += Manager_DynamicKeyEvent;
             SharpBladeHelper.Manager.DisableDynamicKey(RazerAPI.DynamicKeyType.DK1);
             SharpBladeHelper.Manager.DisableDynamicKey(RazerAPI.DynamicKeyType.DK2);
@@ -42,6 +45,9 @@ namespace BrandonScott.RazerNotes.Windows
                 notesVm.Notes.Add(note);
             else
                 notesVm.Notes.Save();
+
+            if (NotesListBox.Items.Count > 0)
+                NotesListBox.SelectedIndex = 0;
         }
 
         private void NewClick(object sender, RoutedEventArgs e)
@@ -78,7 +84,9 @@ namespace BrandonScott.RazerNotes.Windows
 
             if (selectedIndex > 0)
                 NotesListBox.SelectedIndex = selectedIndex - 1;
-            if (selectedIndex == 0 && NotesListBox.Items.Count > 0)
+            else if (NotesListBox.Items.Count == 1)
+                NotesListBox.SelectedIndex = 0;
+            else if (selectedIndex == 0 && NotesListBox.Items.Count > 0)
                 NotesListBox.SelectedIndex = selectedIndex + 1;
         }
 
@@ -113,8 +121,9 @@ namespace BrandonScott.RazerNotes.Windows
                 return;
             else if (NotesListBox.SelectedIndex == NotesListBox.Items.Count - 1 && direction == 1)
                 return;
-
+        
             NotesListBox.SelectedIndex += direction;
+            NotesListBox.ScrollIntoView(NotesListBox.SelectedItem);
         }
 
         private void MoveNoteUp()
