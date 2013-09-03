@@ -144,9 +144,9 @@
     <None Include="Resources\razerrrgo.ttf">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Resources\razerrrg_.ttf">
+    <Resource Include="Resources\razerrrg_.ttf">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
+    </Resource>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Sharparam.SharpBlade\Sharparam.SharpBlade\Sharparam.SharpBlade.csproj">
