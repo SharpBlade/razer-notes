@@ -24,8 +24,9 @@ namespace BrandonScott.RazerNotes.Windows
             SharpBladeHelper.Manager.DisableDynamicKey(RazerAPI.DynamicKeyType.DK1);
             SharpBladeHelper.Manager.DisableDynamicKey(RazerAPI.DynamicKeyType.DK2);
             SharpBladeHelper.Manager.EnableDynamicKey(RazerAPI.DynamicKeyType.DK1, @".\Resources\RazerNotesAdd.png");
-            SharpBladeHelper.Manager.EnableDynamicKey(RazerAPI.DynamicKeyType.DK2, @".\Resources\RazerNotesEdit.png");
-            SharpBladeHelper.Manager.EnableDynamicKey(RazerAPI.DynamicKeyType.DK3, @".\Resources\RazerNotesDelete.png");
+            SharpBladeHelper.Manager.EnableDynamicKey(RazerAPI.DynamicKeyType.DK2, @".\Resources\RazerNotesView.png");
+            SharpBladeHelper.Manager.EnableDynamicKey(RazerAPI.DynamicKeyType.DK3, @".\Resources\RazerNotesEdit.png");
+            SharpBladeHelper.Manager.EnableDynamicKey(RazerAPI.DynamicKeyType.DK4, @".\Resources\RazerNotesDelete.png");
             SharpBladeHelper.Manager.EnableDynamicKey(RazerAPI.DynamicKeyType.DK5, @".\Resources\RazerNotesDown.png");
             SharpBladeHelper.Manager.EnableDynamicKey(RazerAPI.DynamicKeyType.DK10, @".\Resources\RazerNotesUp.png");
 #endif
@@ -79,6 +80,22 @@ namespace BrandonScott.RazerNotes.Windows
                 NotesListBox.SelectedIndex = selectedIndex + 1;
         }
 
+        private void ViewNote()
+        {
+            var selectedItem = NotesListBox.SelectedItem;
+
+            if (selectedItem == null)
+                return;
+#if RAZER
+            SharpBladeHelper.Manager.Touchpad.ClearWindow();
+            SharpBladeHelper.Manager.DynamicKeyEvent -= OnDynamicKeyEvent;
+            RenderPoll.Stop();
+#endif
+            Application.Current.MainWindow = new ViewNote((Note)selectedItem);
+            Close();
+            Application.Current.MainWindow.Show();
+        }
+
         private void EditNote()
         {
             var selectedItem = NotesListBox.SelectedItem;
@@ -127,9 +144,12 @@ namespace BrandonScott.RazerNotes.Windows
                         NewNote();
                         break;
                     case RazerAPI.DynamicKeyType.DK2:
-                        EditNote();
+                        ViewNote();
                         break;
                     case RazerAPI.DynamicKeyType.DK3:
+                        EditNote();
+                        break;
+                    case RazerAPI.DynamicKeyType.DK4:
                         DeleteNote();
                         break;
                     case RazerAPI.DynamicKeyType.DK5:
