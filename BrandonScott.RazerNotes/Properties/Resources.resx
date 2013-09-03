@@ -142,4 +142,13 @@
   <data name="RazerNotesUp" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\RazerNotesUp.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="razerrl_0" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\razerrl_0.ttf;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="razerrrgo" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\razerrrgo.ttf;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="razerrrg_" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\razerrrg_.ttf;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
 </root>
